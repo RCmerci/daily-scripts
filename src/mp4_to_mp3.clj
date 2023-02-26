@@ -3,7 +3,7 @@
             [babashka.fs :as fs]
             [clojure.string :as string]))
 
-(defn main
+(defn -main
   "<in> <out>"
   [& [in out]]
   (let [out (or out "mp4-to-mp3.mp3")
@@ -14,3 +14,6 @@
     (assert (and in out))
     (println :cmd cmd)
     (shell {:out *out*} cmd)))
+
+(when (= *file* (System/getProperty "babashka.file"))
+  (apply -main *command-line-args*))
