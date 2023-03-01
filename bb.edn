@@ -1,9 +1,12 @@
 {:paths ["src"]
  :tasks
  {mp4-to-mp3 mp4-to-mp3/-main
+  aws-log aws-log/-main
+
   bbin-install
   {:doc "bbin install all this scripts"
    :requires ([babashka.tasks :refer [shell]])
    :task
-   (doseq [task ["mp4_to_mp3"]] ; filenames
+   (doseq [task ["mp4_to_mp3"
+                 "aws_log"]]
      (shell (str "bbin install " (str "src/" task ".clj"))))}}}
