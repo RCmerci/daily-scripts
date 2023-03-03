@@ -1,12 +1,13 @@
-{:paths ["src"]
+{:paths    ["src"]
  :tasks
  {mp4-to-mp3 mp4-to-mp3/-main
-  aws-log aws-log/-main
+  aws-log    aws-log/-main
 
   bbin-install
-  {:doc "bbin install all this scripts"
-   :requires ([babashka.tasks :refer [shell]])
+  {:doc      "bbin install all this scripts"
+   :requires ([babashka.tasks :refer [shell]]
+              [babashka.fs :as fs])
    :task
-   (doseq [task ["mp4_to_mp3"
-                 "aws_log"]]
-     (shell (str "bbin install " (str "src/" task ".clj"))))}}}
+   (let [root (str (fs/cwd))]
+     (doseq [f ["mp4-to-mp3" "aws-log"]]
+       (shell (format "bbin install . --local/root %s --main-opts '[\"-m\" \"%s\"]' --as %s" root f f))))}}}

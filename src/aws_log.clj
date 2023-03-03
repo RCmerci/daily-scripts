@@ -44,6 +44,3 @@
                true                     (concat ["--no-paginate" "--no-cli-pager"])))]
         (println :cmd cmd)
         (shell {:env {"AWS_PROFILE" (:env opts)}} cmd)))))
-
-(when (= *file* (System/getProperty "babashka.file"))
-  (apply -main *command-line-args*))
