@@ -14,12 +14,13 @@
 (defn -main
   [& _]
   (let [{{:keys [in out help]} :opts :as args}
-        (cli/parse-opts *command-line-args* {:spec spec
+        (cli/parse-args *command-line-args* {:spec spec
                                              :error-fn
                                              (fn [{:keys [msg]}]
                                                (println (cli/format-opts {:spec spec}))
                                                (println msg)
                                                (System/exit 0))})
+        _ (prn :out out)
         out (if-not (string/ends-with? out ".mp3") (str out ".mp3") out)
         cmd (format "ffmpeg -i %s -f mp3 -vn %s" in out)]
     (when help
