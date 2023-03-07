@@ -1,1 +1,2 @@
-{:paths ["src"]}
+{:paths ["src"]
+ :deps {etaoin/etaoin {:mvn/version "1.0.39"}}}

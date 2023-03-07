@@ -1,7 +1,10 @@
 {:paths    ["src"]
+ :deps
+ {etaoin/etaoin {:mvn/version "1.0.39"}}
  :tasks
- {mp4-to-mp3 mp4-to-mp3/-main
-  aws-log    aws-log/-main
+ {mp4-to-mp3    mp4-to-mp3/-main
+  aws-log       aws-log/-main
+  who-streaming who-streaming/-main
 
   bbin-install
   {:doc      "bbin install all this scripts"
@@ -9,5 +12,5 @@
               [babashka.fs :as fs])
    :task
    (let [root (str (fs/cwd))]
-     (doseq [f ["mp4-to-mp3" "aws-log"]]
+     (doseq [f ["mp4-to-mp3" "aws-log" "who-streaming"]]
        (shell (format "bbin install . --local/root %s --main-opts '[\"-m\" \"%s\"]' --as %s" root f f))))}}}
