@@ -10,7 +10,8 @@
 
 (def live-stream-list {:sccc {:url "https://www.huya.com/123888" :platform :huya}
                        :maybe {:url "https://www.huya.com/211888" :platform :huya}
-                       :ame {:url "https://live.bilibili.com/25836285" :platform :bilibili}})
+                       :ame {:url "https://live.bilibili.com/25836285" :platform :bilibili}
+                       :azi {:url "https://live.bilibili.com/510" :platform :bilibili}})
 
 (defn huya
   [who]
@@ -24,8 +25,9 @@
   [who]
   (let [[status title] (e/with-chrome-headless driver
                          (e/go driver (get-in live-stream-list [who :url]))
-                         (e/wait-exists driver [:player-ctnr {:tag :iframe}])
-                         (e/switch-frame-first driver)
+                         (try (e/wait-exists driver [:player-ctnr {:tag :iframe}])
+                              (e/switch-frame-first driver)
+                              (catch Exception _))
                          (e/wait-visible driver {:fn/has-class :live-skin-main-text})
                          [(e/get-element-text driver {:fn/has-class :live-status})
                           (e/get-element-text driver {:fn/has-class :live-skin-main-text})])]
